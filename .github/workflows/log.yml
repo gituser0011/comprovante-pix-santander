@@ -1,0 +1,19 @@
+name: Log IP visitor
+on:
+  repository_dispatch:
+    types: [log_visitor]
+
+jobs:
+  save:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Append info
+        run: echo '${{ github.event.client_payload.ts }} | ${{ github.event.client_payload.ip }} | ${{ github.event.client_payload.ua }}' >> log.txt
+
+      - name: commit
+        run: |
+          git config --global user.name "bot"
+          git config --global user.email "<sapinhetesilvasabino1610@gmail.com>"
+          git add log.txt
+          git commit -m "auto-log" || exit 0
+          git push
